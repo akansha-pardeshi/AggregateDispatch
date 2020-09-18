@@ -20,6 +20,7 @@ class Navbar extends Component {
     this.setState({ showMenu: true }, () => {
       document.addEventListener("click", this.closeMenu);
     });
+    console.log(this.state.showMenu);
   }
 
   closeMenu() {
