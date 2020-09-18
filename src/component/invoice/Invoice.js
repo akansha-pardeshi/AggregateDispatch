@@ -2,7 +2,34 @@ import React, { Component } from "react";
 import "./Invoice.css";
 import { Link } from "react-router-dom";
 
-export default class extends Component {
+const GenerateInvoice = [
+  {
+    "Name":"Jhon",
+    "Email":"Jhon@gmail.com",
+    "Contact":78895151,
+    "Invoice":1
+  },
+  {
+    "Name":"Akansha",
+    "Email":"Jhon@gmail.com",
+    "Contact":78895151,
+    "Invoice":2
+  },
+  {
+    "Name":"Swati",
+    "Email":"Jhon@gmail.com",
+    "Contact":78895151,
+    "Invoice":3
+  }
+]
+
+class Invoice extends Component {
+  constructor(){
+    super();
+    this.state={
+      search: ""
+    }
+  }
   //   constructor() {
   //     super();
   //     this.state = {
@@ -11,6 +38,41 @@ export default class extends Component {
   //       societies: [],
   //     };
   //   }
+  onChange = event =>{
+    this.setState({
+      search: event.target.value
+    });
+  }
+
+  handleInvoice = (data) => {
+    const {search} = this.state;
+    if(search !==""&& data.Name.toLowerCase().indexOf(search.toLowerCase())==-1){
+      return null
+    }
+
+    return (
+      <table className="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Invoice</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{data.Name}</td>
+            <td>{data.Email}</td>
+            <td>{data.Contact}</td>
+            <td>
+              {data.GenerateInvoice} <i class="far fa-file-pdf"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
+  };
 
   render = () => {
     // const { searchTerm, societies, filteredCustomers, society } = this.state;
@@ -47,6 +109,7 @@ export default class extends Component {
                 <input
                   class="form-control form-control-sm ml-3 w-75"
                   type="text"
+                  onChange={this.onChange}
                   placeholder="Search"
                   aria-label="Search"
                   style={{
@@ -54,8 +117,8 @@ export default class extends Component {
                     borderTop: "Hidden",
                     borderRight: "Hidden",
                     borderLeft: "Hidden",
-                    border:"none",
-                    boxBorder: "none"
+                    border: "none",
+                    boxBorder: "none",
                   }}
                 />
                 {/* <input
@@ -88,7 +151,7 @@ export default class extends Component {
             </div>
           </div>
         </div>
-        <table className="table table-bordered table-striped">
+        {/* <table className="table table-bordered table-striped">
           <thead>
             <tr>
               <th>Name</th>
@@ -114,8 +177,14 @@ export default class extends Component {
                 Generate invoice <i class="far fa-file-pdf"></i>
               </td>
             </tr>
-          </tbody>
-          {/* <tbody>
+          </tbody> */}
+
+        <div className="row">
+          {GenerateInvoice.map((data) => {
+            return this.handleInvoice(data);
+          })}
+        </div>
+        {/* <tbody>
                     {filteredCustomers.map(({ customer_name, phone, flat_no, wings_name, society_name }) => {
                         const address = `${wings_name}/${flat_no}, ${society_name}`
                         return <tr>
@@ -125,8 +194,10 @@ export default class extends Component {
                         </tr>
                     })}
                 </tbody> */}
-        </table>
+        {/* </table> */}
       </div>
     );
   };
 }
+
+export default Invoice;
